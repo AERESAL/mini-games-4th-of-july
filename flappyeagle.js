@@ -12,12 +12,12 @@ eagleUp.src = 'assets/EagleWingUp.bmp';
 
 // Load pipe sprite
 const pipeImg = new Image();
-pipeImg.src = 'assets/firework.png';
+pipeImg.src = 'assets/firework.bmp';
 
 let eagleY = 250;
 let velocity = 0;
-const gravity = 0.05; // Slightly more aggressive gravity for a faster fall
-const flapStrength = -2.2; // Even gentler jump
+const gravity = 0.09; // Slightly more aggressive gravity for a faster fall
+const flapStrength = -2.8; // Even gentler jump
 
 let isFlapping = false;
 

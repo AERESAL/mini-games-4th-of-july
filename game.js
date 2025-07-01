@@ -8,7 +8,7 @@ const eagleUp = new Image();
 eagleUp.src = 'assets/EagleWingUp.bmp';
 
 const pipeImg = new Image();
-pipeImg.src = 'assets/firework.png';
+pipeImg.src = 'assets/firework.bmp';
 
 let eagleY = 250;
 let velocity = 0;
