@@ -4,8 +4,8 @@ Minigames based on the 4th of July.
 ## Multiplayer 
 Mainly done by Sai Seelam
 
-## 1v1 shootout, 2v2 shootout
-## Retrobowl, but Multiplayer. 
+### 1v1 shootout, 2v2 shootout
+### Retrobowl, but Multiplayer. 
 
 
 ## Singleplayer
