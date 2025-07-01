@@ -1,1 +1,1 @@
-# mini-games-4th-of-july
+# Freedom Games
