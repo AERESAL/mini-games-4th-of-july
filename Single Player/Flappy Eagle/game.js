@@ -1,14 +1,37 @@
 const canvas = document.getElementById('gameCanvas');
+canvas.width = 400;
+canvas.height = 600;
 const ctx = canvas.getContext('2d');
+ctx.imageSmoothingEnabled = false;
+
+function resizeCanvas() {
+  const aspect = 400 / 600;
+  let w = window.innerWidth;
+  let h = window.innerHeight;
+  if (w / h > aspect) {
+    w = h * aspect;
+  } else {
+    h = w / aspect;
+  }
+  canvas.style.width = w + 'px';
+  canvas.style.height = h + 'px';
+  // Center the canvas using absolute positioning
+  canvas.style.position = 'absolute';
+  canvas.style.left = ((window.innerWidth - w) / 2) + 'px';
+  canvas.style.top = ((window.innerHeight - h) / 2) + 'px';
+  canvas.style.margin = '0';
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
 
 const eagleDown = new Image();
-eagleDown.src = 'assets/EagleWingDown.bmp';
+eagleDown.src = '../../assets/EagleWingDown.bmp';
 
 const eagleUp = new Image();
-eagleUp.src = 'assets/EagleWingUp.bmp';
+eagleUp.src = '../../assets/EagleWingUp.bmp';
 
 const pipeImg = new Image();
-pipeImg.src = 'assets/firework.bmp';
+pipeImg.src = '../../assets/firework.bmp';
 
 let eagleY = 250;
 let velocity = 0;
@@ -47,7 +70,7 @@ canvas.addEventListener('mousedown', flap);
 canvas.addEventListener('touchstart', (e) => {
   e.preventDefault();
   flap();
-});
+}, { passive: false });
 
 function checkCollision() {
   const eagleRect = { x: 100, y: eagleY, w: 40, h: 40 };
@@ -111,36 +134,27 @@ function update() {
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  // Draw pipes using firework.png, tiled vertically
+  // Draw pipes using firework.png, top pipe rotated 180deg
   for (let pipe of pipes) {
-    // Top pipe
+    // Top pipe (rotated)
     let topPipeHeight = pipe.gapY - pipeGap / 2;
     if (topPipeHeight > 0) {
-      ctx.save();
-      ctx.translate(pipe.x, topPipeHeight);
-      ctx.scale(1, -1); // Flip for top pipe
-      for (let y = 0; y < topPipeHeight; y += pipeImg.height * (pipeWidth / pipeImg.width)) {
-        ctx.drawImage(
-          pipeImg,
-          0,
-          y,
-          pipeWidth,
-          Math.min(pipeImg.height * (pipeWidth / pipeImg.width), topPipeHeight - y)
-        );
+      let y = topPipeHeight - pipeImg.height;
+      while (y > 0 - pipeImg.height) {
+        ctx.save();
+        ctx.translate(pipe.x + pipeWidth / 2, y + pipeImg.height / 2);
+        ctx.rotate(Math.PI); // 180 degrees
+        ctx.drawImage(pipeImg, -pipeWidth / 2, -pipeImg.height / 2, pipeWidth, pipeImg.height);
+        ctx.restore();
+        y -= pipeImg.height;
       }
-      ctx.restore();
     }
-    // Bottom pipe
+    // Bottom pipe (normal)
     let bottomPipeY = pipe.gapY + pipeGap / 2;
-    let bottomPipeHeight = canvas.height - bottomPipeY;
-    for (let y = 0; y < bottomPipeHeight; y += pipeImg.height * (pipeWidth / pipeImg.width)) {
-      ctx.drawImage(
-        pipeImg,
-        pipe.x,
-        bottomPipeY + y,
-        pipeWidth,
-        Math.min(pipeImg.height * (pipeWidth / pipeImg.width), bottomPipeHeight - y)
-      );
+    let y = bottomPipeY;
+    while (y < canvas.height) {
+      ctx.drawImage(pipeImg, pipe.x, y, pipeWidth, pipeImg.height);
+      y += pipeImg.height;
     }
   }
   // Draw eagle
@@ -175,7 +189,7 @@ function handleRestart() {
 canvas.addEventListener('mousedown', handleRestart);
 canvas.addEventListener('touchstart', (e) => {
   handleRestart();
-});
+}, { passive: false });
 
 function gameLoop() {
   update();
