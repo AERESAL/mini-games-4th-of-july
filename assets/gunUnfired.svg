@@ -1,0 +1,64 @@
+<svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Pixelated gun from backside view -->
+  <defs>
+    <style>
+      .pixel { shape-rendering: crispEdges; }
+    </style>
+  </defs>
+  
+  <!-- Transparent background -->
+  <rect x="0" y="0" width="64" height="64" fill="none"/>
+  
+  <!-- Gun barrel (top part) -->
+  <rect x="28" y="8" width="8" height="24" fill="#404040" class="pixel"/>
+  <rect x="26" y="10" width="12" height="20" fill="#505050" class="pixel"/>
+  <rect x="28" y="12" width="8" height="16" fill="#606060" class="pixel"/>
+  
+  <!-- Barrel end/muzzle -->
+  <rect x="26" y="6" width="12" height="4" fill="#303030" class="pixel"/>
+  <rect x="28" y="4" width="8" height="4" fill="#202020" class="pixel"/>
+  <rect x="30" y="2" width="4" height="4" fill="#101010" class="pixel"/>
+  
+  <!-- Gun body/receiver -->
+  <rect x="20" y="32" width="24" height="16" fill="#505050" class="pixel"/>
+  <rect x="18" y="34" width="28" height="12" fill="#606060" class="pixel"/>
+  <rect x="22" y="36" width="20" height="8" fill="#707070" class="pixel"/>
+  
+  <!-- Trigger guard -->
+  <rect x="24" y="48" width="16" height="8" fill="#404040" class="pixel"/>
+  <rect x="26" y="50" width="12" height="4" fill="none" class="pixel"/>
+  <rect x="28" y="52" width="8" height="2" fill="none" class="pixel"/>
+  
+  <!-- Grip -->
+  <rect x="32" y="56" width="8" height="8" fill="#505050" class="pixel"/>
+  <rect x="30" y="58" width="12" height="6" fill="#606060" class="pixel"/>
+  
+  <!-- Grip texture lines -->
+  <rect x="32" y="58" width="8" height="1" fill="#404040" class="pixel"/>
+  <rect x="32" y="60" width="8" height="1" fill="#404040" class="pixel"/>
+  <rect x="32" y="62" width="8" height="1" fill="#404040" class="pixel"/>
+  
+  <!-- Sight (rear) -->
+  <rect x="30" y="30" width="4" height="4" fill="#303030" class="pixel"/>
+  <rect x="31" y="28" width="2" height="4" fill="#202020" class="pixel"/>
+  
+  <!-- Safety/selector -->
+  <rect x="44" y="38" width="4" height="2" fill="#808080" class="pixel"/>
+  
+  <!-- Ejection port -->
+  <rect x="18" y="36" width="2" height="6" fill="#202020" class="pixel"/>
+  
+  <!-- Stock attachment point -->
+  <rect x="46" y="40" width="4" height="6" fill="#404040" class="pixel"/>
+  
+  <!-- Magazine well -->
+  <rect x="28" y="46" width="8" height="4" fill="#303030" class="pixel"/>
+  
+  <!-- Barrel shadows/depth -->
+  <rect x="26" y="12" width="2" height="16" fill="#404040" class="pixel"/>
+  <rect x="36" y="12" width="2" height="16" fill="#707070" class="pixel"/>
+  
+  <!-- Body shadows -->
+  <rect x="18" y="36" width="2" height="8" fill="#404040" class="pixel"/>
+  <rect x="44" y="36" width="2" height="8" fill="#707070" class="pixel"/>
+</svg>

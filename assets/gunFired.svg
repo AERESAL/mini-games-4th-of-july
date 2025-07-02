@@ -1,0 +1,85 @@
+<svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Pixelated gun with recoil/muzzle flash -->
+  <defs>
+    <style>
+      .pixel { shape-rendering: crispEdges; }
+    </style>
+  </defs>
+  
+  <!-- Transparent background -->
+  <rect x="0" y="0" width="64" height="64" fill="none"/>
+  
+  <!-- Gun barrel (shifted up slightly for recoil) -->
+  <rect x="28" y="6" width="8" height="24" fill="#404040" class="pixel"/>
+  <rect x="26" y="8" width="12" height="20" fill="#505050" class="pixel"/>
+  <rect x="28" y="10" width="8" height="16" fill="#606060" class="pixel"/>
+  
+  <!-- Muzzle flash effects -->
+  <rect x="24" y="0" width="16" height="4" fill="#FFFF00" class="pixel"/>
+  <rect x="26" y="2" width="12" height="2" fill="#FF8800" class="pixel"/>
+  <rect x="28" y="4" width="8" height="2" fill="#FF4400" class="pixel"/>
+  
+  <!-- Flash particles -->
+  <rect x="20" y="2" width="2" height="2" fill="#FFAA00" class="pixel"/>
+  <rect x="42" y="2" width="2" height="2" fill="#FFAA00" class="pixel"/>
+  <rect x="22" y="4" width="2" height="2" fill="#FF6600" class="pixel"/>
+  <rect x="40" y="4" width="2" height="2" fill="#FF6600" class="pixel"/>
+  <rect x="18" y="6" width="2" height="2" fill="#FF9900" class="pixel"/>
+  <rect x="44" y="6" width="2" height="2" fill="#FF9900" class="pixel"/>
+  
+  <!-- Gun body/receiver (shifted up for recoil) -->
+  <rect x="20" y="30" width="24" height="16" fill="#505050" class="pixel"/>
+  <rect x="18" y="32" width="28" height="12" fill="#606060" class="pixel"/>
+  <rect x="22" y="34" width="20" height="8" fill="#707070" class="pixel"/>
+  
+  <!-- Trigger guard -->
+  <rect x="24" y="46" width="16" height="8" fill="#404040" class="pixel"/>
+  <rect x="26" y="48" width="12" height="4" fill="none" class="pixel"/>
+  <rect x="28" y="50" width="8" height="2" fill="none" class="pixel"/>
+  
+  <!-- Grip -->
+  <rect x="32" y="54" width="8" height="8" fill="#505050" class="pixel"/>
+  <rect x="30" y="56" width="12" height="6" fill="#606060" class="pixel"/>
+  
+  <!-- Grip texture lines -->
+  <rect x="32" y="56" width="8" height="1" fill="#404040" class="pixel"/>
+  <rect x="32" y="58" width="8" height="1" fill="#404040" class="pixel"/>
+  <rect x="32" y="60" width="8" height="1" fill="#404040" class="pixel"/>
+  
+  <!-- Sight (rear) -->
+  <rect x="30" y="28" width="4" height="4" fill="#303030" class="pixel"/>
+  <rect x="31" y="26" width="2" height="4" fill="#202020" class="pixel"/>
+  
+  <!-- Safety/selector -->
+  <rect x="44" y="36" width="4" height="2" fill="#808080" class="pixel"/>
+  
+  <!-- Ejection port with brass case -->
+  <rect x="18" y="34" width="2" height="6" fill="#202020" class="pixel"/>
+  <!-- Ejected brass casing -->
+  <rect x="14" y="32" width="3" height="4" fill="#FFCC00" class="pixel"/>
+  <rect x="12" y="30" width="3" height="4" fill="#FFDD00" class="pixel"/>
+  
+  <!-- Stock attachment point -->
+  <rect x="46" y="38" width="4" height="6" fill="#404040" class="pixel"/>
+  
+  <!-- Magazine well -->
+  <rect x="28" y="44" width="8" height="4" fill="#303030" class="pixel"/>
+  
+  <!-- Recoil motion lines -->
+  <rect x="4" y="20" width="4" height="1" fill="#808080" class="pixel"/>
+  <rect x="2" y="22" width="4" height="1" fill="#808080" class="pixel"/>
+  <rect x="0" y="24" width="4" height="1" fill="#808080" class="pixel"/>
+  
+  <!-- Barrel shadows/depth (adjusted for recoil) -->
+  <rect x="26" y="10" width="2" height="16" fill="#404040" class="pixel"/>
+  <rect x="36" y="10" width="2" height="16" fill="#707070" class="pixel"/>
+  
+  <!-- Body shadows -->
+  <rect x="18" y="34" width="2" height="8" fill="#404040" class="pixel"/>
+  <rect x="44" y="34" width="2" height="8" fill="#707070" class="pixel"/>
+  
+  <!-- Smoke particles from barrel -->
+  <rect x="32" y="0" width="2" height="2" fill="#888888" class="pixel"/>
+  <rect x="30" y="2" width="2" height="2" fill="#AAAAAA" class="pixel"/>
+  <rect x="34" y="2" width="2" height="2" fill="#AAAAAA" class="pixel"/>
+</svg>

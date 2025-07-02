@@ -19,3 +19,8 @@ Mainly done by Rehan Jalali
 -  Singleplayer, Rehan Jalali
 -  Multiplayer, Sai Seelam
 -  Title Screen, Rehan Jalali
+
+
+
+### Fonts
+https://fonts.google.com/selection/embed

@@ -32,6 +32,10 @@ class GunRangeGame {
         this.maxTargets = 5;
         this.targetSpeed = 2;
         
+        // Gun state management
+        this.gunState = 'unfired'; // 'unfired', 'fired', 'reload'
+        this.gunStateTimer = 0;
+        
         // Resize canvas
         this.resizeCanvas();
         window.addEventListener('resize', () => this.resizeCanvas());
@@ -86,6 +90,36 @@ class GunRangeGame {
         // Try to load PNG first
         this.bulletHoleImage.src = '../../assets/shotBullet.png';
         
+        // Create gun image - use SVG directly
+        this.gunImage = new Image();
+        this.gunImageFired = new Image();
+        this.gunImageReload = new Image();
+        
+        this.gunImage.onload = () => {
+            console.log('Gun unfired SVG loaded successfully');
+        };
+        this.gunImage.onerror = () => {
+            console.log('gunUnfired.svg not found, creating canvas placeholder');
+            this.createPlaceholderGun();
+        };
+        this.gunImage.src = '../../assets/gunUnfired.svg';
+        
+        this.gunImageFired.onload = () => {
+            console.log('Gun fired SVG loaded successfully');
+        };
+        this.gunImageFired.onerror = () => {
+            console.log('gunFired.svg not found');
+        };
+        this.gunImageFired.src = '../../assets/gunFired.svg';
+        
+        this.gunImageReload.onload = () => {
+            console.log('Gun reload SVG loaded successfully');
+        };
+        this.gunImageReload.onerror = () => {
+            console.log('gunReload.svg not found');
+        };
+        this.gunImageReload.src = '../../assets/gunReload.svg';
+        
         // Create canvas placeholders as final fallback after a delay
         setTimeout(() => {
             if (!this.targetImage.complete || this.targetImage.naturalWidth === 0) {
@@ -94,29 +128,22 @@ class GunRangeGame {
             if (!this.bulletHoleImage.complete || this.bulletHoleImage.naturalWidth === 0) {
                 this.createPlaceholderBulletHole();
             }
+            if (!this.gunImage.complete || this.gunImage.naturalWidth === 0) {
+                this.createPlaceholderGun();
+            }
         }, 500);
-        
-        // Create gun image placeholder
-        this.gunImage = new Image();
-        const gunCanvas = document.createElement('canvas');
-        gunCanvas.width = 60;
-        gunCanvas.height = 200;
-        const gunCtx = gunCanvas.getContext('2d');
-        
-        // Draw vertical gun shape
-        gunCtx.fillStyle = '#444444';
-        // Barrel
-        gunCtx.fillRect(25, 10, 10, 120);
-        // Handle
-        gunCtx.fillRect(15, 130, 30, 60);
-        // Trigger guard
-        gunCtx.fillStyle = '#666666';
-        gunCtx.fillRect(20, 140, 20, 15);
-        // Trigger
-        gunCtx.fillStyle = '#888888';
-        gunCtx.fillRect(22, 145, 5, 8);
-        
-        this.gunImage.src = gunCanvas.toDataURL();
+    }
+    
+    getCurrentGunImage() {
+        switch(this.gunState) {
+            case 'fired':
+                return this.gunImageFired.complete ? this.gunImageFired : this.gunImage;
+            case 'reload':
+                return this.gunImageReload.complete ? this.gunImageReload : this.gunImage;
+            case 'unfired':
+            default:
+                return this.gunImage;
+        }
     }
     
     createPlaceholderTarget() {
@@ -231,6 +258,43 @@ class GunRangeGame {
         }
     }
     
+    createPlaceholderGun() {
+        // Create pixelated gun placeholder (64x64 to match SVG)
+        const gunCanvas = document.createElement('canvas');
+        gunCanvas.width = 64;
+        gunCanvas.height = 64;
+        const gunCtx = gunCanvas.getContext('2d');
+        
+        // Draw pixelated gun from backside view
+        gunCtx.fillStyle = '#505050';
+        // Barrel
+        gunCtx.fillRect(28, 8, 8, 24);
+        gunCtx.fillStyle = '#404040';
+        // Muzzle
+        gunCtx.fillRect(26, 6, 12, 4);
+        gunCtx.fillRect(28, 4, 8, 4);
+        gunCtx.fillRect(30, 2, 4, 4);
+        
+        // Gun body
+        gunCtx.fillStyle = '#606060';
+        gunCtx.fillRect(20, 32, 24, 16);
+        gunCtx.fillRect(22, 36, 20, 8);
+        
+        // Trigger guard
+        gunCtx.fillStyle = '#404040';
+        gunCtx.fillRect(24, 48, 16, 8);
+        
+        // Grip
+        gunCtx.fillStyle = '#505050';
+        gunCtx.fillRect(32, 56, 8, 8);
+        
+        // Only set if the actual image failed to load
+        if (!this.gunImage.complete || this.gunImage.naturalWidth === 0) {
+            this.gunImage.src = gunCanvas.toDataURL();
+            console.log('Using placeholder gun image');
+        }
+    }
+
     setupEventListeners() {
         // Mouse click for shooting
         document.addEventListener('click', (e) => {
@@ -342,6 +406,10 @@ class GunRangeGame {
     
     reload() {
         if (this.ammo < 30) {
+            // Set gun to reload state
+            this.gunState = 'reload';
+            this.gunStateTimer = 60; // Show reload animation for 1 second (60 frames)
+            
             this.ammo = 30;
             this.updateUI();
             
@@ -369,6 +437,10 @@ class GunRangeGame {
         if (this.ammo <= 0) return;
         
         this.ammo--;
+        
+        // Set gun to fired state for recoil effect
+        this.gunState = 'fired';
+        this.gunStateTimer = 10; // Show fired animation for ~0.17 seconds (10 frames)
         
         // Check for target hits
         let hit = false;
@@ -563,6 +635,19 @@ class GunRangeGame {
         }
     }
     
+    updateGunState() {
+        if (this.gunStateTimer > 0) {
+            this.gunStateTimer--;
+            
+            // Reset to unfired state when timer expires
+            if (this.gunStateTimer === 0) {
+                if (this.gunState === 'fired' || this.gunState === 'reload') {
+                    this.gunState = 'unfired';
+                }
+            }
+        }
+    }
+    
     draw() {
         // Clear canvas
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -605,11 +690,13 @@ class GunRangeGame {
             this.ctx.globalAlpha = 1;
         });
         
-        // Draw gun at bottom center (vertical)
-        if (this.gunImage.complete) {
-            const gunX = this.canvas.width / 2 - 30;
-            const gunY = this.canvas.height - 220;
-            this.ctx.drawImage(this.gunImage, gunX, gunY);
+        // Draw gun at bottom center (64x64 SVG) - use current gun state
+        const currentGunImage = this.getCurrentGunImage();
+        if (currentGunImage.complete) {
+            const gunSize = 240; // Scale up the 64x64 SVG
+            const gunX = this.canvas.width / 2 - gunSize / 2;
+            const gunY = this.canvas.height - gunSize - 20;
+            this.ctx.drawImage(currentGunImage, gunX, gunY, gunSize, gunSize);
         }
         
         // Draw shooting zone crosshair
@@ -641,6 +728,7 @@ class GunRangeGame {
             this.updateParticles();
             this.updateBulletHoles();
             this.updateShootingZone();
+            this.updateGunState();
         }
         
         this.draw();
