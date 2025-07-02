@@ -1,16 +1,49 @@
-<!-- Bullet hole SVG that can be converted to PNG -->
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-  <!-- Outer damage area -->
-  <circle cx="12" cy="12" r="10" fill="#666666" opacity="0.8"/>
-  <!-- Medium damage -->
-  <circle cx="12" cy="12" r="7" fill="#333333"/>
+<svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Pixelated bullet hole with crisp edges -->
+  <defs>
+    <style>
+      .pixel { shape-rendering: crispEdges; }
+    </style>
+  </defs>
+  
+  <!-- Background (transparent) -->
+  <rect x="0" y="0" width="64" height="64" fill="none"/>
+  
+  <!-- Bullet hole outer damage -->
+  <rect x="24" y="20" width="16" height="24" fill="#404040" class="pixel"/>
+  <rect x="20" y="24" width="24" height="16" fill="#404040" class="pixel"/>
+  
+  <!-- Main hole -->
+  <rect x="26" y="22" width="12" height="20" fill="#000000" class="pixel"/>
+  <rect x="22" y="26" width="20" height="12" fill="#000000" class="pixel"/>
+  
   <!-- Inner hole -->
-  <circle cx="12" cy="12" r="4" fill="black"/>
-  <!-- Scattered debris -->
-  <circle cx="20" cy="8" r="1" fill="#444444"/>
-  <circle cx="4" cy="16" r="1" fill="#444444"/>
-  <circle cx="18" cy="18" r="1" fill="#444444"/>
-  <circle cx="6" cy="6" r="1" fill="#444444"/>
-  <circle cx="22" cy="14" r="0.5" fill="#555555"/>
-  <circle cx="2" cy="10" r="0.5" fill="#555555"/>
+  <rect x="28" y="24" width="8" height="16" fill="#080808" class="pixel"/>
+  <rect x="24" y="28" width="16" height="8" fill="#080808" class="pixel"/>
+  
+  <!-- Center hole -->
+  <rect x="30" y="26" width="4" height="12" fill="#000000" class="pixel"/>
+  <rect x="26" y="30" width="12" height="4" fill="#000000" class="pixel"/>
+  
+  <!-- Scattered debris pixels -->
+  <rect x="18" y="18" width="2" height="2" fill="#606060" class="pixel"/>
+  <rect x="44" y="16" width="2" height="2" fill="#505050" class="pixel"/>
+  <rect x="16" y="32" width="2" height="2" fill="#555555" class="pixel"/>
+  <rect x="46" y="36" width="2" height="2" fill="#454545" class="pixel"/>
+  <rect x="20" y="46" width="2" height="2" fill="#585858" class="pixel"/>
+  <rect x="42" y="48" width="2" height="2" fill="#4A4A4A" class="pixel"/>
+  
+  <!-- Edge cracks -->
+  <rect x="24" y="18" width="2" height="2" fill="#303030" class="pixel"/>
+  <rect x="38" y="18" width="2" height="2" fill="#303030" class="pixel"/>
+  <rect x="18" y="30" width="2" height="2" fill="#353535" class="pixel"/>
+  <rect x="44" y="34" width="2" height="2" fill="#353535" class="pixel"/>
+  <rect x="26" y="46" width="2" height="2" fill="#2A2A2A" class="pixel"/>
+  <rect x="36" y="46" width="2" height="2" fill="#2A2A2A" class="pixel"/>
+  
+  <!-- Small damage spots -->
+  <rect x="14" y="28" width="2" height="2" fill="#4C4C4C" class="pixel"/>
+  <rect x="48" y="30" width="2" height="2" fill="#484848" class="pixel"/>
+  <rect x="32" y="12" width="2" height="2" fill="#525252" class="pixel"/>
+  <rect x="30" y="50" width="2" height="2" fill="#4E4E4E" class="pixel"/>
 </svg>
