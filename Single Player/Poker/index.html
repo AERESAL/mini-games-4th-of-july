@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4th of July Poker Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🎆 4th of July Poker 🎆</h1>
+        
+        <!-- Start Screen -->
+        <div id="startScreen" class="screen">
+            <div class="instructions">
+                <h2>How to Play 5-Card Draw Poker</h2>
+                <ul>
+                    <li>You and the computer are each dealt 5 cards</li>
+                    <li>Click on cards you want to replace (up to 5 cards)</li>
+                    <li>Click "Replace Cards" to get new cards</li>
+                    <li>Click "Reveal Hands" to see who wins</li>
+                    <li>Best poker hand wins the round!</li>
+                </ul>
+                <div class="hand-rankings">
+                    <h3>Poker Hand Rankings (High to Low)</h3>
+                    <div class="rankings-grid">
+                        <div>1. Royal Flush</div>
+                        <div>2. Straight Flush</div>
+                        <div>3. Four of a Kind</div>
+                        <div>4. Full House</div>
+                        <div>5. Flush</div>
+                        <div>6. Straight</div>
+                        <div>7. Three of a Kind</div>
+                        <div>8. Two Pair</div>
+                        <div>9. One Pair</div>
+                        <div>10. High Card</div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="startGame()">Start Game</button>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="gameScreen" class="screen hidden">
+            <!-- Score Board -->
+            <div class="score-board">
+                <div class="score-item">
+                    <div class="label">Player Wins</div>
+                    <div class="value" id="playerScore">0</div>
+                </div>
+                <div class="score-item">
+                    <div class="label">Round</div>
+                    <div class="value" id="roundCount">1</div>
+                </div>
+                <div class="score-item">
+                    <div class="label">Computer Wins</div>
+                    <div class="value" id="computerScore">0</div>
+                </div>
+            </div>
+
+            <!-- Computer Hand -->
+            <div class="hand-section">
+                <h2>🤖 Computer Hand</h2>
+                <div id="computerHand" class="hand">
+                    <!-- Computer cards will be added here -->
+                </div>
+                <div id="computerHandName" class="hand-name"></div>
+            </div>
+
+            <!-- Game Controls -->
+            <div class="game-controls">
+                <div id="gameMessage" class="message">Select cards to replace and click "Replace Cards"</div>
+                <div class="controls">
+                    <button id="replaceBtn" class="btn btn-warning" onclick="replaceCards()">Replace Selected Cards</button>
+                    <button id="revealBtn" class="btn btn-secondary" onclick="revealHands()" style="display: none;">Reveal Hands</button>
+                    <button id="nextRoundBtn" class="btn btn-primary" onclick="nextRound()" style="display: none;">Next Round</button>
+                    <button class="btn btn-accent" onclick="showStartScreen()">New Game</button>
+                </div>
+                <div id="result" class="result" style="display: none;"></div>
+            </div>
+
+            <!-- Player Hand -->
+            <div class="hand-section">
+                <h2>🎮 Your Hand</h2>
+                <div id="playerHand" class="hand">
+                    <!-- Player cards will be added here -->
+                </div>
+                <div id="playerHandName" class="hand-name"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fireworks Container -->
+    <div id="fireworks" class="fireworks"></div>
+
+    <script src="game.js"></script>
+</body>
+</html>

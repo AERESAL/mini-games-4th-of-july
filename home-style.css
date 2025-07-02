@@ -1,0 +1,582 @@
+/* Minecraft-style CSS with 4th of July theme */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Press Start 2P', cursive;
+    overflow: hidden;
+    height: 100vh;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+/* Minecraft-style pixelated American flag background */
+.minecraft-bg {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background: #B22234; /* Flag red base */
+}
+
+/* Create the American flag stripes - 13 total (7 red, 6 white) */
+.minecraft-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        #B22234 0%,           /* Red stripe 1 */
+        #B22234 7.69%,        /* End of red stripe 1 (100/13 = 7.69%) */
+        #FFFFFF 7.69%,        /* White stripe 1 */
+        #FFFFFF 15.38%,       /* End of white stripe 1 */
+        #B22234 15.38%,       /* Red stripe 2 */
+        #B22234 23.07%,       /* End of red stripe 2 */
+        #FFFFFF 23.07%,       /* White stripe 2 */
+        #FFFFFF 30.76%,       /* End of white stripe 2 */
+        #B22234 30.76%,       /* Red stripe 3 */
+        #B22234 38.45%,       /* End of red stripe 3 */
+        #FFFFFF 38.45%,       /* White stripe 3 */
+        #FFFFFF 46.14%,       /* End of white stripe 3 */
+        #B22234 46.14%,       /* Red stripe 4 */
+        #B22234 53.83%,       /* End of red stripe 4 */
+        #FFFFFF 53.83%,       /* White stripe 4 */
+        #FFFFFF 61.52%,       /* End of white stripe 4 */
+        #B22234 61.52%,       /* Red stripe 5 */
+        #B22234 69.21%,       /* End of red stripe 5 */
+        #FFFFFF 69.21%,       /* White stripe 5 */
+        #FFFFFF 76.90%,       /* End of white stripe 5 */
+        #B22234 76.90%,       /* Red stripe 6 */
+        #B22234 84.59%,       /* End of red stripe 6 */
+        #FFFFFF 84.59%,       /* White stripe 6 */
+        #FFFFFF 92.28%,       /* End of white stripe 6 */
+        #B22234 92.28%,       /* Red stripe 7 */
+        #B22234 100%          /* End of red stripe 7 */
+    );
+    animation: flagWave 4s ease-in-out infinite;
+    transform-origin: left center;
+}
+
+/* Create the blue canton (star field) with better stars */
+.minecraft-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40%;
+    height: 50%;
+    background: #3C3B6E;
+    /* Create a pattern of 50 stars arranged in 9 rows */
+    background-image: 
+        /* Row 1 - 6 stars */
+        radial-gradient(circle at 8.33% 10%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 25% 10%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 41.67% 10%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 58.33% 10%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 75% 10%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 91.67% 10%, #FFFFFF 4px, transparent 4px),
+        /* Row 2 - 5 stars */
+        radial-gradient(circle at 16.67% 20%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 33.33% 20%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 50% 20%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 66.67% 20%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 83.33% 20%, #FFFFFF 4px, transparent 4px),
+        /* Row 3 - 6 stars */
+        radial-gradient(circle at 8.33% 30%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 25% 30%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 41.67% 30%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 58.33% 30%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 75% 30%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 91.67% 30%, #FFFFFF 4px, transparent 4px),
+        /* Row 4 - 5 stars */
+        radial-gradient(circle at 16.67% 40%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 33.33% 40%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 50% 40%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 66.67% 40%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 83.33% 40%, #FFFFFF 4px, transparent 4px),
+        /* Row 5 - 6 stars */
+        radial-gradient(circle at 8.33% 50%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 25% 50%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 41.67% 50%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 58.33% 50%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 75% 50%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 91.67% 50%, #FFFFFF 4px, transparent 4px),
+        /* Row 6 - 5 stars */
+        radial-gradient(circle at 16.67% 60%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 33.33% 60%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 50% 60%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 66.67% 60%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 83.33% 60%, #FFFFFF 4px, transparent 4px),
+        /* Row 7 - 6 stars */
+        radial-gradient(circle at 8.33% 70%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 25% 70%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 41.67% 70%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 58.33% 70%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 75% 70%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 91.67% 70%, #FFFFFF 4px, transparent 4px),
+        /* Row 8 - 5 stars */
+        radial-gradient(circle at 16.67% 80%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 33.33% 80%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 50% 80%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 66.67% 80%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 83.33% 80%, #FFFFFF 4px, transparent 4px),
+        /* Row 9 - 6 stars */
+        radial-gradient(circle at 8.33% 90%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 25% 90%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 41.67% 90%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 58.33% 90%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 75% 90%, #FFFFFF 4px, transparent 4px),
+        radial-gradient(circle at 91.67% 90%, #FFFFFF 4px, transparent 4px);
+    animation: flagWave 4s ease-in-out infinite;
+    transform-origin: left center;
+    z-index: 1;
+    /* Add a subtle border to make the canton more defined */
+    border-right: 2px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+@keyframes flagWave {
+    0%, 100% {
+        transform: skewY(0deg) scaleX(1);
+    }
+    25% {
+        transform: skewY(1deg) scaleX(1.02);
+    }
+    50% {
+        transform: skewY(0deg) scaleX(1);
+    }
+    75% {
+        transform: skewY(-1deg) scaleX(1.02);
+    }
+}
+
+/* Animated clouds with transparency for flag visibility */
+.clouds {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.cloud {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 0;
+    opacity: 0.6;
+    animation: float 20s infinite linear;
+    box-shadow: 
+        0 0 0 4px rgba(255, 255, 255, 0.2),
+        0 0 0 8px rgba(255, 255, 255, 0.1);
+}
+
+.cloud::before,
+.cloud::after {
+    content: '';
+    position: absolute;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.cloud-1 {
+    width: 100px;
+    height: 40px;
+    top: 20%;
+    left: -100px;
+    animation-duration: 25s;
+}
+
+.cloud-2 {
+    width: 80px;
+    height: 30px;
+    top: 10%;
+    left: -80px;
+    animation-duration: 30s;
+    animation-delay: -10s;
+}
+
+.cloud-3 {
+    width: 120px;
+    height: 50px;
+    top: 30%;
+    left: -120px;
+    animation-duration: 35s;
+    animation-delay: -20s;
+}
+
+@keyframes float {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(100vw + 200px)); }
+}
+
+/* Main container */
+.container {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.1); /* Slight overlay for better text readability */
+}
+
+/* Title styling with enhanced contrast */
+.title-container {
+    text-align: center;
+    margin-bottom: 50px;
+    animation: titleGlow 3s ease-in-out infinite alternate;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 30px;
+    border-radius: 10px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(5px);
+}
+
+.minecraft-title {
+    font-size: 4rem;
+    text-shadow: 
+        4px 4px 0px #000,
+        8px 8px 0px rgba(0,0,0,0.3);
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.freedom-text {
+    background: linear-gradient(45deg, #ff0000, #ffffff, #0000ff);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: patrioticGradient 3s ease infinite;
+}
+
+.games-text {
+    background: linear-gradient(45deg, #ffffff, #ff0000, #ffffff);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: patrioticGradient 3s ease infinite reverse;
+}
+
+@keyframes patrioticGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes titleGlow {
+    from { transform: scale(1); }
+    to { transform: scale(1.05); }
+}
+
+.subtitle {
+    font-size: 1rem;
+    color: #fff;
+    text-shadow: 2px 2px 0px #000;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* Menu buttons */
+.menu-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    max-width: 600px;
+    width: 100%;
+}
+
+.menu-button {
+    width: 100%;
+    height: 80px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.menu-button:hover {
+    transform: translateY(-3px);
+}
+
+.menu-button:active {
+    transform: translateY(1px);
+}
+
+.button-face {
+    width: 100%;
+    height: 100%;
+    border: 4px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    position: relative;
+    box-shadow: 
+        inset -4px -4px 0px rgba(0,0,0,0.3),
+        inset 4px 4px 0px rgba(255,255,255,0.3),
+        4px 4px 0px rgba(0,0,0,0.3);
+    transition: all 0.1s ease;
+}
+
+.menu-button:hover .button-face {
+    box-shadow: 
+        inset -4px -4px 0px rgba(0,0,0,0.4),
+        inset 4px 4px 0px rgba(255,255,255,0.4),
+        6px 6px 0px rgba(0,0,0,0.3);
+}
+
+.single-player .button-face {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+}
+
+.multiplayer .button-face {
+    background: linear-gradient(135deg, #4ecdc4, #44a08d);
+}
+
+.settings .button-face {
+    background: linear-gradient(135deg, #ffa726, #ff9800);
+}
+
+.about .button-face {
+    background: linear-gradient(135deg, #9c88ff, #8c7ae6);
+}
+
+.button-icon {
+    font-size: 1.5rem;
+    filter: drop-shadow(2px 2px 0px #000);
+}
+
+.button-text {
+    font-size: 0.8rem;
+    color: #fff;
+    text-shadow: 2px 2px 0px #000;
+    letter-spacing: 1px;
+}
+
+/* Game overlay */
+.game-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: opacity 0.3s ease;
+}
+
+.game-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.overlay-content {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    border: 4px solid #000;
+    padding: 40px;
+    max-width: 80%;
+    max-height: 80%;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 
+        inset -4px -4px 0px rgba(0,0,0,0.3),
+        inset 4px 4px 0px rgba(255,255,255,0.1),
+        8px 8px 0px rgba(0,0,0,0.3);
+}
+
+.overlay-content h2 {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.5rem;
+    text-shadow: 2px 2px 0px #000;
+}
+
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.game-card {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    border: 3px solid #000;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 
+        inset -3px -3px 0px rgba(0,0,0,0.3),
+        inset 3px 3px 0px rgba(255,255,255,0.2),
+        3px 3px 0px rgba(0,0,0,0.3);
+}
+
+.game-card:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #3cb4e8, #2c94c4);
+}
+
+.game-card h3 {
+    color: #fff;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 0px #000;
+}
+
+.game-card p {
+    color: #ecf0f1;
+    font-size: 0.6rem;
+    line-height: 1.4;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: #e74c3c;
+    color: #fff;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 2px solid #000;
+    font-size: 1rem;
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.3);
+}
+
+.close-button:hover {
+    background: #c0392b;
+}
+
+/* Fireworks animation */
+.fireworks-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.firework {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #ff6b6b;
+    border-radius: 50%;
+    animation: fireworkAnimation 8s infinite;
+    animation-delay: var(--delay);
+    left: var(--x);
+    top: var(--y);
+}
+
+.firework:nth-child(2n) {
+    background: #4ecdc4;
+}
+
+.firework:nth-child(3n) {
+    background: #ffffff;
+}
+
+.firework:nth-child(4n) {
+    background: #ffa726;
+}
+
+@keyframes fireworkAnimation {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    10% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    20% {
+        transform: scale(3);
+        opacity: 0.8;
+    }
+    30% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .minecraft-title {
+        font-size: 2.5rem;
+    }
+    
+    .menu-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        max-width: 300px;
+    }
+    
+    .button-text {
+        font-size: 0.7rem;
+    }
+    
+    .overlay-content {
+        padding: 20px;
+        max-width: 95%;
+    }
+    
+    .games-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .minecraft-title {
+        font-size: 2rem;
+    }
+    
+    .subtitle {
+        font-size: 0.8rem;
+    }
+    
+    .menu-button {
+        height: 60px;
+    }
+    
+    .button-icon {
+        font-size: 1.2rem;
+    }
+    
+    .button-text {
+        font-size: 0.6rem;
+    }
+}

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freedom Games - 4th of July Edition</title>
+    <link rel="stylesheet" href="home-style.css">
+</head>
+<body>
+    <div class="minecraft-bg">
+        <!-- Animated clouds -->
+        <div class="clouds">
+            <div class="cloud cloud-1"></div>
+            <div class="cloud cloud-2"></div>
+            <div class="cloud cloud-3"></div>
+        </div>
+        
+        <!-- Main container -->
+        <div class="container">
+            <!-- Logo/Title -->
+            <div class="title-container">
+                <h1 class="minecraft-title">
+                    <span class="freedom-text">FREEDOM</span>
+                    <span class="games-text">GAMES</span>
+                </h1>
+                <div class="subtitle">Freedom Week Game Collection</div>
+            </div>
+            
+            <!-- Menu buttons -->
+            <div class="menu-container">
+                <div class="menu-button single-player" onclick="showSinglePlayerGames()">
+                    <div class="button-face">
+                        <div class="button-icon">🎮</div>
+                        <div class="button-text">SINGLE PLAYER</div>
+                    </div>
+                </div>
+                
+                <div class="menu-button multiplayer" onclick="showMultiplayerGames()">
+                    <div class="button-face">
+                        <div class="button-icon">👥</div>
+                        <div class="button-text">MULTIPLAYER</div>
+                    </div>
+                </div>
+                
+                <div class="menu-button settings" onclick="showSettings()">
+                    <div class="button-face">
+                        <div class="button-icon">⚙️</div>
+                        <div class="button-text">SETTINGS</div>
+                    </div>
+                </div>
+                
+                <div class="menu-button about" onclick="showAbout()">
+                    <div class="button-face">
+                        <div class="button-icon">ℹ️</div>
+                        <div class="button-text">ABOUT</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Game selection overlay -->
+            <div id="gameOverlay" class="game-overlay hidden">
+                <div class="overlay-content">
+                    <h2 id="overlayTitle">Single Player Games</h2>
+                    <div class="games-grid" id="gamesGrid">
+                        <!-- Games will be populated by JavaScript -->
+                    </div>
+                    <div class="close-button" onclick="hideOverlay()">✕</div>
+                </div>
+            </div>
+            
+            <!-- Fireworks -->
+            <div class="fireworks-container">
+                <div class="firework" style="--delay: 0s; --x: 20%; --y: 30%;"></div>
+                <div class="firework" style="--delay: 2s; --x: 80%; --y: 40%;"></div>
+                <div class="firework" style="--delay: 4s; --x: 50%; --y: 20%;"></div>
+                <div class="firework" style="--delay: 6s; --x: 30%; --y: 50%;"></div>
+                <div class="firework" style="--delay: 8s; --x: 70%; --y: 30%;"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="home-script.js"></script>
+</body>
+</html>

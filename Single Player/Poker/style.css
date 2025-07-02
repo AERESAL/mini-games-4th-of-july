@@ -1,0 +1,450 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(45deg, #1e3c72, #2a5298, #ff6b6b, #ffffff);
+    background-size: 400% 400%;
+    animation: gradientShift 8s ease infinite;
+    min-height: 100vh;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    text-align: center;
+    font-size: 3em;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Screen Management */
+.screen {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Start Screen */
+.instructions {
+    background: rgba(0,0,0,0.3);
+    padding: 40px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    backdrop-filter: blur(10px);
+    max-width: 800px;
+    text-align: left;
+}
+
+.instructions h2 {
+    color: #4ecdc4;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.instructions h3 {
+    color: #4ecdc4;
+    margin: 20px 0 15px 0;
+}
+
+.instructions ul {
+    list-style-position: inside;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.rankings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    background: rgba(255,255,255,0.1);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Buttons */
+.btn {
+    padding: 15px 30px;
+    font-size: 1.1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 5px;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+    color: white;
+    box-shadow: 0 4px 15px rgba(238, 90, 82, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(238, 90, 82, 0.6);
+}
+
+.btn-secondary {
+    background: linear-gradient(45deg, #4ecdc4, #44a08d);
+    color: white;
+    box-shadow: 0 4px 15px rgba(78, 205, 196, 0.4);
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(78, 205, 196, 0.6);
+}
+
+.btn-warning {
+    background: linear-gradient(45deg, #ffa726, #ff9800);
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 167, 38, 0.4);
+}
+
+.btn-warning:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 167, 38, 0.6);
+}
+
+.btn-accent {
+    background: linear-gradient(45deg, #9c88ff, #8c7ae6);
+    color: white;
+    box-shadow: 0 4px 15px rgba(156, 136, 255, 0.4);
+}
+
+.btn-accent:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(156, 136, 255, 0.6);
+}
+
+/* Game Screen */
+.score-board {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.score-item {
+    text-align: center;
+    padding: 15px 25px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    border: 2px solid rgba(255,255,255,0.3);
+}
+
+.score-item .label {
+    font-size: 0.9em;
+    opacity: 0.8;
+    margin-bottom: 5px;
+}
+
+.score-item .value {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #4ecdc4;
+}
+
+/* Hand Sections */
+.hand-section {
+    margin-bottom: 40px;
+}
+
+.hand-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.hand {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.hand-name {
+    text-align: center;
+    font-size: 1.3em;
+    font-style: italic;
+    color: #4ecdc4;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+/* Cards */
+.card {
+    width: 90px;
+    height: 130px;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    border: 2px solid #333;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    user-select: none;
+}
+
+.card:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.card.selected {
+    transform: translateY(-15px);
+    border-color: #ff6b6b;
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5);
+    background: linear-gradient(145deg, #ffe6e6, #ffcccc);
+}
+
+.card.computer-card {
+    background: linear-gradient(145deg, #1e3c72, #2a5298);
+    color: white;
+    cursor: default;
+}
+
+.card.computer-card:hover {
+    transform: none;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 8px;
+}
+
+.card-rank {
+    font-size: 1.3em;
+    margin-bottom: 5px;
+}
+
+.card-suit {
+    font-size: 2.5em;
+    margin: 10px 0;
+}
+
+.card.red .card-suit {
+    color: #ff4757;
+}
+
+.card.black .card-suit {
+    color: #2f3542;
+}
+
+.card-rank-bottom {
+    font-size: 1.3em;
+    transform: rotate(180deg);
+    margin-top: 5px;
+}
+
+/* Game Controls */
+.game-controls {
+    text-align: center;
+    padding: 30px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    margin: 20px 0;
+}
+
+.message {
+    font-size: 1.4em;
+    margin-bottom: 25px;
+    padding: 20px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 15px;
+    border-left: 4px solid #4ecdc4;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.result {
+    margin-top: 25px;
+    padding: 25px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.winner {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.winner.player-win {
+    color: #2ecc71;
+}
+
+.winner.computer-win {
+    color: #e74c3c;
+}
+
+.winner.tie {
+    color: #f39c12;
+}
+
+/* Fireworks */
+.fireworks {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+@keyframes firework {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+.firework {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    animation: firework 1s ease-out forwards;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 2.2em;
+    }
+
+    .score-board {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .hand {
+        gap: 8px;
+    }
+
+    .card {
+        width: 70px;
+        height: 100px;
+        font-size: 1em;
+    }
+
+    .card-suit {
+        font-size: 2em !important;
+    }
+
+    .controls {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn {
+        width: 250px;
+        margin: 5px 0;
+    }
+
+    .instructions {
+        padding: 20px;
+        margin: 10px;
+    }
+
+    .rankings-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        width: 60px;
+        height: 85px;
+        font-size: 0.9em;
+    }
+
+    .card-rank {
+        font-size: 1em;
+    }
+
+    .card-suit {
+        font-size: 1.5em !important;
+        margin: 5px 0;
+    }
+
+    .card-rank-bottom {
+        font-size: 1em;
+    }
+}
+
+/* Loading Animation */
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.loading {
+    animation: pulse 1s infinite;
+}
