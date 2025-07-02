@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gun Range - Target Shooter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="gameContainer">
+        <div id="gameUI">
+            <div id="crosshair"></div>
+            <div id="scoreBoard">
+                <div id="score">Score: 0</div>
+                <div id="ammo">Ammo: 30</div>
+                <div id="timer">Time: 60s</div>
+            </div>
+            <div id="gameOverScreen" class="hidden">
+                <h2>Game Over!</h2>
+                <p id="finalScore">Final Score: 0</p>
+                <button id="restartBtn">Play Again</button>
+            </div>
+            <div id="startScreen">
+                <h1>Gun Range Target Shooter</h1>
+                <p>Shoot the moving targets! Hit the center for 10 points, edges for less.</p>
+                <p>Use ARROW KEYS to aim your shooting zone!</p>
+                <p>Press SPACEBAR or CLICK to shoot!</p>
+                <p>Press 'R' to reload when out of ammo!</p>
+                <button id="startBtn">Start Game</button>
+            </div>
+        </div>
+        <canvas id="gameCanvas"></canvas>
+    </div>
+    
+    <script src="game.js"></script>
+</body>
+</html>

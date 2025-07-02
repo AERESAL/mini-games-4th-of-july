@@ -1,0 +1,180 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white;
+    overflow: hidden;
+    cursor: none;
+}
+
+#gameContainer {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+#gameCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(to bottom, #87CEEB 0%, #98FB98 100%);
+    cursor: none;
+}
+
+#gameUI {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+#crosshair {
+    display: none; /* Hide the HTML crosshair since we're drawing it on canvas */
+}
+
+#crosshair::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 2px;
+    background: #ff0000;
+    transform: translate(-50%, -50%);
+}
+
+#crosshair::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2px;
+    height: 20px;
+    background: #ff0000;
+    transform: translate(-50%, -50%);
+}
+
+#scoreBoard {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 15px;
+    border-radius: 10px;
+    min-width: 200px;
+}
+
+#scoreBoard div {
+    margin: 5px 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#score {
+    color: #00ff00;
+}
+
+#ammo {
+    color: #ffff00;
+}
+
+#timer {
+    color: #ff6600;
+}
+
+#gameOverScreen, #startScreen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    border: 2px solid #fff;
+    pointer-events: auto;
+}
+
+#startScreen h1 {
+    color: #ff6600;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+}
+
+#startScreen p {
+    margin-bottom: 30px;
+    font-size: 1.2em;
+    line-height: 1.4;
+}
+
+#gameOverScreen h2 {
+    color: #ff0000;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+button {
+    background: linear-gradient(45deg, #ff6600, #ff9900);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+button:hover {
+    background: linear-gradient(45deg, #ff9900, #ffcc00);
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+.hidden {
+    display: none;
+}
+
+.hit-animation {
+    animation: hitPulse 0.3s ease-out;
+}
+
+@keyframes hitPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.score-popup {
+    position: absolute;
+    font-size: 24px;
+    font-weight: bold;
+    color: #00ff00;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    pointer-events: none;
+    animation: scoreFloat 1s ease-out forwards;
+    z-index: 20;
+}
+
+@keyframes scoreFloat {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+}

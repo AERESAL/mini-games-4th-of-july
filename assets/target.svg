@@ -1,0 +1,17 @@
+<!-- Target SVG that can be converted to PNG -->
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <!-- White background -->
+  <circle cx="60" cy="60" r="58" fill="white" stroke="black" stroke-width="4"/>
+  <!-- Black ring -->
+  <circle cx="60" cy="60" r="50" fill="black"/>
+  <!-- White ring -->
+  <circle cx="60" cy="60" r="40" fill="white"/>
+  <!-- Black ring -->
+  <circle cx="60" cy="60" r="30" fill="black"/>
+  <!-- White ring -->
+  <circle cx="60" cy="60" r="20" fill="white"/>
+  <!-- Black ring -->
+  <circle cx="60" cy="60" r="12" fill="black"/>
+  <!-- Red bullseye -->
+  <circle cx="60" cy="60" r="6" fill="red"/>
+</svg>
