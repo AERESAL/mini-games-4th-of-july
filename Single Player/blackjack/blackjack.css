@@ -1,0 +1,56 @@
+body {
+    font-family: 'Orbitron', 'Arial Black', Arial, Helvetica, sans-serif;
+    text-align: center;
+    background-color: #222;
+    background-image: url('../../assets/blackjackbackground.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain; /* Show full image, no cropping or zoom */
+    min-height: 100vh;
+    min-width: 100vw;
+    color: #fff;
+}
+
+h1, h2, #dealer-score, #your-score, #result {
+    font-family: 'Orbitron', 'Arial Black', Arial, Helvetica, sans-serif;
+    color: #fff;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 8px #000, 0 0 10px #00f, 0 0 5px #fff;
+}
+
+#hit, #stay, #stand, #play-again {
+    width: 120px;
+    height: 55px;
+    font-size: 22px;
+    font-family: 'Orbitron', 'Arial Black', Arial, Helvetica, sans-serif;
+    color: #fff;
+    background: linear-gradient(90deg, #ff003c 0%, #ff8c00 100%);
+    border: 4px solid #fff;
+    border-radius: 0;
+    margin: 10px 8px;
+    box-shadow: 0 4px 0 #222, 0 0 0 #fff3;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    outline: 2px solid #000;
+    outline-offset: -6px;
+    image-rendering: pixelated;
+    text-shadow: 2px 2px 0 #000, 0 0 2px #fff;
+    letter-spacing: 1px;
+}
+
+#hit:hover, #stay:hover, #stand:hover, #play-again:hover {
+    background: linear-gradient(90deg, #ff8c00 0%, #ff003c 100%);
+    transform: scale(1.07);
+    box-shadow: 0 6px 0 #111, 0 0 8px #fff3;
+}
+
+#dealer-cards img,
+#your-cards img {
+    height: 175px;
+    width: 125px;
+    margin: 1px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px #000a;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
