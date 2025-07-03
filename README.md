@@ -15,7 +15,7 @@ Mainly done by Rehan Jalali
 ### Gun Range
 ### Blackjack
 ## Creds
--  ALL assets created by Sai Seelam
+-  Most assets created by Sai Seelam
 -  Singleplayer, Rehan Jalali
 -  Multiplayer, Sai Seelam
 -  Title Screen, Rehan Jalali
