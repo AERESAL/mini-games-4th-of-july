@@ -1,0 +1,10 @@
+body {
+    font-family:'Courier New', Courier, monospace;
+    text-align: center;
+    background: #000;
+}
+
+#board {
+    background-color: #fff;
+    /* You can use a 4th of July themed background or just white */
+}

@@ -4,26 +4,6 @@ canvas.height = 600;
 const ctx = canvas.getContext('2d');
 ctx.imageSmoothingEnabled = false;
 
-function resizeCanvas() {
-  const aspect = 400 / 600;
-  let w = window.innerWidth;
-  let h = window.innerHeight;
-  if (w / h > aspect) {
-    w = h * aspect;
-  } else {
-    h = w / aspect;
-  }
-  canvas.style.width = w + 'px';
-  canvas.style.height = h + 'px';
-  // Center the canvas using absolute positioning
-  canvas.style.position = 'absolute';
-  canvas.style.left = ((window.innerWidth - w) / 2) + 'px';
-  canvas.style.top = ((window.innerHeight - h) / 2) + 'px';
-  canvas.style.margin = '0';
-}
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-
 const eagleDown = new Image();
 eagleDown.src = '../../assets/EagleWingDown.bmp';
 
