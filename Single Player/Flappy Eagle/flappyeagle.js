@@ -1,228 +1,185 @@
-// game.js
-// Flappy Eagle core logic
+// Flappy Eagle - 4th of July Edition
+// Based on ImKennyYip/flappy-bird, but with eagle and firework assets
 
-const canvas = document.getElementById('gameCanvas');
-const ctx = canvas.getContext('2d');
+//board
+let board;
+let boardWidth = 360;
+let boardHeight = 640;
+let context;
 
-const eagleDown = new Image();
-eagleDown.src = 'assets/EagleWingDown.bmp';
+//eagle
+let eagleWidth = 34; //width/height ratio = 408/228 = 17/12
+let eagleHeight = 24;
+let eagleX = boardWidth/8;
+let eagleY = boardHeight/2;
+let eagleImg;
 
-const eagleUp = new Image();
-eagleUp.src = 'assets/EagleWingUp.bmp';
+let eagle = {
+    x : eagleX,
+    y : eagleY,
+    width : eagleWidth,
+    height : eagleHeight
+}
 
-// Load pipe sprite
-const pipeImg = new Image();
-pipeImg.src = 'assets/firework.bmp';
+//fireworks
+let fireworkArray = [];
+let fireworkWidth = 64; //width/height ratio = 384/3072 = 1/8
+let fireworkHeight = 512;
+let fireworkX = boardWidth;
+let fireworkY = 0;
 
-let eagleY = 250;
-let velocity = 0;
-const gravity = 0.09; // Slightly more aggressive gravity for a faster fall
-const flapStrength = -2.8; // Even gentler jump
+let fireworkImg;
+//background
+let backgroundImg;
 
-let isFlapping = false;
+//physics
+let velocityX = -2; //fireworks moving left speed
+let velocityY = 0; //eagle jump speed
+let gravity = 0.4;
 
-let score = 0;
-let passedPipe = false;
 let gameOver = false;
+let score = 0;
 
-// Pipe settings
-const pipeWidth = 60;
-const pipeGap = 150;
-const pipeSpacing = 250; // Distance between pipes
-let pipes = [];
+window.onload = function() {
+    board = document.getElementById("board");
+    board.height = boardHeight;
+    board.width = boardWidth;
+    context = board.getContext("2d"); //used for drawing on the board
 
-// Set the background color to match the eagle sprite's background (assuming white)
-canvas.style.background = '#ffffff';
-canvas.style.display = 'block';
-canvas.style.position = 'fixed';
-canvas.style.top = '0';
-canvas.style.left = '0';
-canvas.style.width = '100vw';
-canvas.style.height = '100vh';
-canvas.style.margin = '0';
-canvas.style.padding = '0';
-canvas.style.border = 'none';
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-function resetGame() {
-  eagleY = canvas.height / 2 - eagleHeight / 2;
-  velocity = 0;
-  score = 0;
-  pipes = [];
-  // Spawn multiple pipes at start
-  for (let i = 0; i < 3; i++) {
-    pipes.push({
-      x: canvas.width + i * pipeSpacing,
-      gapY: Math.random() * (canvas.height - pipeGap * 2) + pipeGap
-    });
-  }
-  passedPipe = false;
-  gameOver = false;
-}
-
-// Ensure eagleHeight is defined before use
-const eagleWidth = 40;
-const eagleHeight = 40;
-const eagleX = () => (canvas.width / 2 - eagleWidth / 2);
-
-let flapTimeout = null;
-let flapLocked = false;
-
-function flap() {
-  if (flapLocked) return; // Prevent new flap until timeout is over
-  velocity = flapStrength;
-  isFlapping = true;
-  flapLocked = true;
-  clearTimeout(flapTimeout);
-  flapTimeout = setTimeout(() => {
-    isFlapping = false;
-    flapLocked = false;
-  }, 200); // 0.2 seconds
-}
-
-// Listen for spacebar as well as mouse/touch
-canvas.addEventListener('mousedown', flap);
-canvas.addEventListener('touchstart', (e) => {
-  e.preventDefault();
-  flap();
-});
-document.addEventListener('keydown', (e) => {
-  if (e.code === 'Space') {
-    flap();
-    // Also trigger click event for game restart if game over
-    if (gameOver) {
-      handleRestart();
+    //load images
+    eagleImg = new Image();
+    eagleImg.src = "../../assets/EagleWingDown.bmp";
+    eagleImg.onload = function() {
+        context.drawImage(eagleImg, eagle.x, eagle.y, eagle.width, eagle.height);
     }
-  }
-});
 
-function checkCollision() {
-  // Eagle rectangle
-  const eagleRect = { x: eagleX(), y: eagleY, w: eagleWidth, h: eagleHeight };
-  // Ground or ceiling
-  if (eagleY + eagleHeight > canvas.height || eagleY < 0) {
-    return true;
-  }
-  // Pipes
-  for (let pipe of pipes) {
-    // Top pipe
-    if (
-      eagleRect.x + eagleRect.w > pipe.x &&
-      eagleRect.x < pipe.x + pipeWidth &&
-      eagleRect.y < pipe.gapY - pipeGap / 2
-    ) {
-      return true;
-    }
-    // Bottom pipe
-    if (
-      eagleRect.x + eagleRect.w > pipe.x &&
-      eagleRect.x < pipe.x + pipeWidth &&
-      eagleRect.y + eagleRect.h > pipe.gapY + pipeGap / 2
-    ) {
-      return true;
-    }
-  }
-  return false;
+    fireworkImg = new Image();
+    fireworkImg.src = "../../assets/firework.png";
+
+    backgroundImg = new Image();
+    backgroundImg.src = "../../assets/background.png";
+
+    requestAnimationFrame(update);
+    setInterval(placeFireworks, 1500); //every 1.5 seconds
+    document.addEventListener("keydown", moveEagle);
+    document.addEventListener("mousedown", jumpEagle);
+    document.addEventListener("touchstart", jumpEagle);
 }
 
 function update() {
-  if (gameOver) return;
-  velocity += gravity;
-  eagleY += velocity;
-
-  // Move pipes
-  for (let pipe of pipes) {
-    pipe.x -= 2;
-  }
-
-  // Add new pipe if needed
-  if (pipes.length < 3 || pipes[pipes.length - 1].x < canvas.width - pipeSpacing) {
-    pipes.push({
-      x: pipes[pipes.length - 1].x + pipeSpacing,
-      gapY: Math.random() * (canvas.height - pipeGap * 2) + pipeGap
-    });
-  }
-
-  // Remove off-screen pipes
-  if (pipes[0].x < -pipeWidth) {
-    pipes.shift();
-    passedPipe = false;
-  }
-
-  // Scoring
-  for (let pipe of pipes) {
-    if (!pipe.passed && pipe.x + pipeWidth < eagleX() + eagleWidth / 2) {
-      score++;
-      pipe.passed = true;
+    requestAnimationFrame(update);
+    if (gameOver) {
+        return;
     }
-  }
+    context.clearRect(0, 0, board.width, board.height);
 
-  if (checkCollision()) {
-    gameOver = true;
-  }
+    // Draw background first
+    if (backgroundImg && backgroundImg.complete) {
+        context.drawImage(backgroundImg, 0, 0, board.width, board.height);
+    }
+
+    //eagle
+    velocityY += gravity;
+    eagle.y = Math.max(eagle.y + velocityY, 0); //apply gravity to current eagle.y, limit the eagle.y to top of the canvas
+    context.drawImage(eagleImg, eagle.x, eagle.y, eagle.width, eagle.height);
+
+    if (eagle.y > board.height) {
+        gameOver = true;
+    }
+
+    //fireworks
+    for (let i = 0; i < fireworkArray.length; i++) {
+        let firework = fireworkArray[i];
+        firework.x += velocityX;
+        context.drawImage(firework.img, firework.x, firework.y, firework.width, firework.height);
+
+        if (!firework.passed && eagle.x > firework.x + firework.width) {
+            score += 0.5; //0.5 because there are 2 fireworks! so 0.5*2 = 1, 1 for each set of fireworks
+            firework.passed = true;
+        }
+
+        if (detectCollision(eagle, firework)) {
+            gameOver = true;
+        }
+    }
+
+    //clear fireworks
+    while (fireworkArray.length > 0 && fireworkArray[0].x < -fireworkWidth) {
+        fireworkArray.shift(); //removes first element from the array
+    }
+
+    //score
+    context.fillStyle = "black";
+    context.font="45px sans-serif";
+    context.fillText(score, 5, 45);
+
+    if (gameOver) {
+        context.fillText("GAME OVER!", 5, 90);
+        context.font="24px sans-serif";
+        context.fillText("Press Space or Click to Restart", 5, 130);
+    }
 }
 
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  // Draw pipes using firework.png
-  for (let pipe of pipes) {
-    // Top pipe
-    ctx.save();
-    ctx.translate(pipe.x, pipe.gapY - pipeGap / 2);
-    ctx.scale(1, -1); // Flip for top pipe
-    ctx.drawImage(pipeImg, 0, 0, pipeWidth, pipe.gapY - pipeGap / 2);
-    ctx.restore();
-    // Bottom pipe
-    ctx.drawImage(pipeImg, pipe.x, pipe.gapY + pipeGap / 2, pipeWidth, canvas.height - pipe.gapY - pipeGap / 2);
-  }
-  // Draw eagle centered
-  const eagleSprite = isFlapping ? eagleDown : eagleUp;
-  ctx.drawImage(eagleSprite, eagleX(), eagleY, eagleWidth, eagleHeight);
-  // Draw score (now black for visibility)
-  ctx.fillStyle = 'black';
-  ctx.font = 'bold 40px Arial';
-  ctx.fillText(score, canvas.width / 2 - 10, 60);
+function placeFireworks() {
+    if (gameOver) {
+        return;
+    }
 
-  // Draw game over
-  if (gameOver) {
-    ctx.fillStyle = 'rgba(0,0,0,0.5)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = 'white';
-    ctx.font = '48px Arial';
-    ctx.fillText('Game Over', canvas.width / 2 - 120, canvas.height / 2 - 20);
-    ctx.font = '28px Arial';
-    ctx.fillText('Score: ' + score, canvas.width / 2 - 60, canvas.height / 2 + 30);
-    ctx.font = '20px Arial';
-    ctx.fillText('Click or Tap to Restart', canvas.width / 2 - 100, canvas.height / 2 + 70);
-  }
+    let randomFireworkY = fireworkY - fireworkHeight/4 - Math.random()*(fireworkHeight/2);
+    let openingSpace = board.height/4;
+
+    let topFirework = {
+        img : fireworkImg,
+        x : fireworkX,
+        y : randomFireworkY,
+        width : fireworkWidth,
+        height : fireworkHeight,
+        passed : false
+    }
+    fireworkArray.push(topFirework);
+
+    let bottomFirework = {
+        img : fireworkImg,
+        x : fireworkX,
+        y : randomFireworkY + fireworkHeight + openingSpace,
+        width : fireworkWidth,
+        height : fireworkHeight,
+        passed : false
+    }
+    fireworkArray.push(bottomFirework);
 }
 
-function handleRestart() {
-  if (gameOver) {
-    resetGame();
-    gameOver = false;
-  }
+function moveEagle(e) {
+    if (e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX") {
+        //jump
+        velocityY = -6;
+
+        //reset game
+        if (gameOver) {
+            eagle.y = eagleY;
+            fireworkArray = [];
+            score = 0;
+            gameOver = false;
+            velocityY = 0;
+        }
+    }
 }
 
-canvas.addEventListener('mousedown', handleRestart);
-canvas.addEventListener('touchstart', (e) => {
-  handleRestart();
-});
-
-function gameLoop() {
-  update();
-  draw();
-  requestAnimationFrame(gameLoop);
+function jumpEagle(e) {
+    if (!gameOver) {
+        velocityY = -6;
+    } else {
+        eagle.y = eagleY;
+        fireworkArray = [];
+        score = 0;
+        gameOver = false;
+        velocityY = 0;
+    }
 }
 
-eagleDown.onload = () => {
-  eagleUp.onload = () => {
-    resetGame(); // Ensure game state is initialized before starting loop
-    gameLoop();
-  };
-};
+function detectCollision(a, b) {
+    return a.x < b.x + b.width &&   //a's top left corner doesn't reach b's top right corner
+           a.x + a.width > b.x &&   //a's top right corner passes b's top left corner
+           a.y < b.y + b.height &&  //a's top left corner doesn't reach b's bottom left corner
+           a.y + a.height > b.y;    //a's bottom left corner passes b's top left corner
+}
