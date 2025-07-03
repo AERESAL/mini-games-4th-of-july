@@ -13,7 +13,7 @@ Mainly done by Rehan Jalali
 
 ### Flappy Eagle
 ### Gun Range
-
+### Blackjack
 ## Creds
 -  ALL assets created by Sai Seelam
 -  Singleplayer, Rehan Jalali
