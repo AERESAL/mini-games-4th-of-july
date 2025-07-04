@@ -152,7 +152,17 @@ function resetGame() {
 
 // Helper to get card image path
 function getCardImagePath(card) {
-    return "../../assets/cards/" + card + ".png";
+    // Map card code to blackjackPIL.py output naming
+    // card: e.g. 'A-C', '10-H', 'J-S'
+    const rankMap = {
+        'A': 'ace', '2': '2', '3': '3', '4': '4', '5': '5', '6': '6', '7': '7',
+        '8': '8', '9': '9', '10': '10', 'J': 'jack', 'Q': 'queen', 'K': 'king'
+    };
+    const suitMap = {
+        'S': 'spades', 'D': 'diamonds', 'C': 'clubs', 'H': 'hearts'
+    };
+    const [rank, suit] = card.split('-');
+    return `../../assets/cards/${suitMap[suit]}_${rankMap[rank]}.png`;
 }
 
 function getValue(card) {
