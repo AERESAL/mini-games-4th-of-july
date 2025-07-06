@@ -86,9 +86,7 @@ function hit() {
     cardImg.src = getCardImagePath(card);
     yourSum += getValue(card);
     yourAceCount += checkAce(card);
-    document.getElementById("your-cards").append(cardImg);
-
-    if (reduceAce(yourSum, yourAceCount) > 21) { //A, J, 8 -> 1 + 10 + 8
+    document.getElementById("your-cards").append(cardImg);    if (reduceAce(yourSum, yourAceCount).sum > 21) { //A, J, 8 -> 1 + 10 + 8
         canHit = false;
     }
 
@@ -97,9 +95,16 @@ function hit() {
 }
 
 function stay() {
-    dealerSum = reduceAce(dealerSum, dealerAceCount);
-    yourSum = reduceAce(yourSum, yourAceCount);
+    let dealerResult = reduceAce(dealerSum, dealerAceCount);
+    dealerSum = dealerResult.sum;
+    dealerAceCount = dealerResult.aceCount;
+    
+    let yourResult = reduceAce(yourSum, yourAceCount);
+    yourSum = yourResult.sum;
+    yourAceCount = yourResult.aceCount;
+    
     canHit = false;
+    
     // Reveal hidden card
     let dealerCardsDiv = document.getElementById("dealer-cards");
     let hiddenImg = document.createElement("img");
@@ -107,12 +112,21 @@ function stay() {
     // Replace the placeholder with the real card
     let hiddenCardElem = document.getElementById("hidden-card");
     dealerCardsDiv.replaceChild(hiddenImg, hiddenCardElem);
+    
     // Dealer draws until 17 or more
     while (dealerSum < 17) {
         let card = deck.pop();
-        dealerSum += getValue(card);
-        dealerAceCount += checkAce(card);
-        dealerSum = reduceAce(dealerSum, dealerAceCount);
+        let cardValue = getValue(card);
+        let cardAceCount = checkAce(card);
+        
+        dealerSum += cardValue;
+        dealerAceCount += cardAceCount;
+        
+        // Reduce aces if needed after adding the new card
+        let result = reduceAce(dealerSum, dealerAceCount);
+        dealerSum = result.sum;
+        dealerAceCount = result.aceCount;
+        
         let cardImg = document.createElement("img");
         cardImg.src = getCardImagePath(card);
         dealerCardsDiv.appendChild(cardImg);
@@ -160,27 +174,25 @@ function resetGame() {
 
 // Helper to get card image path
 function getCardImagePath(card) {
-    // Map card code to blackjackPIL.py output naming
+    // Map card code to blackjack cards folder images
     // card: e.g. 'A-C', '10-H', 'J-S', or 'BACK'
     if (card === 'BACK') {
-        return '../../assets/cards/BACK.png';
+        // Return a solid color instead of trying to load an image
+        return 'data:image/svg+xml;base64,' + btoa('<svg xmlns="http://www.w3.org/2000/svg" width="80" height="112"><rect width="80" height="112" fill="#b71c1c"/></svg>');
+    }    // Card image mapping for blackjack cards - exactly 52 unique cards mapped to 52 files
+    const cardImageMap = {
+        'A-S': 'black jack cards_01.png', '2-S': 'black jack cards_02.png', '3-S': 'black jack cards_03.png', '4-S': 'black jack cards_04.png', '5-S': 'black jack cards_05.png', '6-S': 'black jack cards_06.png', '7-S': 'black jack cards_07.png', '8-S': 'black jack cards_08.png', '9-S': 'black jack cards_09.png', '10-S': 'black jack cards_10.png', 'J-S': 'black jack cards_11.png', 'Q-S': 'black jack cards_13.png', 'K-S': 'black jack cards_14.png',
+        'A-D': 'black jack cards_16.png', '2-D': 'black jack cards_17.png', '3-D': 'black jack cards_18.png', '4-D': 'black jack cards_20.png', '5-D': 'black jack cards_21.png', '6-D': 'black jack cards_23.png', '7-D': 'black jack cards_24.png', '8-D': 'black jack cards_27.png', '9-D': 'black jack cards_28.png', '10-D': 'black jack cards_29.png', 'J-D': 'black jack cards_30.png', 'Q-D': 'black jack cards_32.png', 'K-D': 'black jack cards_33.png',
+        'A-C': 'black jack cards_35.png', '2-C': 'black jack cards_36.png', '3-C': 'black jack cards_39.png', '4-C': 'black jack cards_40.png', '5-C': 'black jack cards_41.png', '6-C': 'black jack cards_42.png', '7-C': 'black jack cards_43.png', '8-C': 'black jack cards_44.png', '9-C': 'black jack cards_47.png', '10-C': 'black jack cards_48.png', 'J-C': 'black jack cards_49.png', 'Q-C': 'black jack cards_50.png', 'K-C': 'black jack cards_51.png',
+        'A-H': 'black jack cards_52.png', '2-H': 'black jack cards_53.png', '3-H': 'black jack cards_54.png', '4-H': 'black jack cards_55.png', '5-H': 'black jack cards_56.png', '6-H': 'black jack cards_58.png', '7-H': 'black jack cards_59.png', '8-H': 'black jack cards_60.png', '9-H': 'black jack cards_61.png', '10-H': 'black jack cards_62.png', 'J-H': 'black jack cards_63.png', 'Q-H': 'black jack cards_64.png', 'K-H': 'black jack cards_65.png'
+    };    // Get the card image filename
+    const cardImg = cardImageMap[card];
+    if (cardImg) {
+        return `../../assets/cards/images/${cardImg}`;
     }
-    const rankMap = {
-        'A': 'ace', '2': '2', '3': '3', '4': '4', '5': '5', '6': '6', '7': '7',
-        '8': '8', '9': '9', '10': '10', 'J': 'jack', 'Q': 'queen', 'K': 'king'
-    };
-    const suitMap = {
-        'S': 'spades', 'D': 'diamonds', 'C': 'clubs', 'H': 'hearts'
-    };
-    if (card.includes('-')) {
-        const [rank, suit] = card.split('-');
-        return `../../assets/cards/${suitMap[suit]}_${rankMap[rank]}.png`;
-    } else if (card.includes('_')) {
-        // Already in the correct format
-        return `../../assets/cards/${card}.png`;
-    }
-    // fallback
-    return '../../assets/cards/BACK.png';
+    
+    // fallback to first card if mapping fails
+    return '../../assets/cards/images/black jack cards_01.png';
 }
 
 function getValue(card) {
@@ -220,5 +232,5 @@ function reduceAce(playerSum, playerAceCount) {
         playerSum -= 10;
         playerAceCount -= 1;
     }
-    return playerSum;
+    return { sum: playerSum, aceCount: playerAceCount };
 }

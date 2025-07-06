@@ -263,20 +263,15 @@ class PokerGame {
         // Determine card image filename
         let cardImg = '';
         if (!isPlayerHand && this.gameState !== 'revealed') {
-            cardImg = 'BACK.png';
+            // Use a solid color for card back instead of an image
+            cardDiv.style.background = '#b71c1c'; // Dark red card back
+            cardDiv.style.backgroundImage = 'none';
         } else {
-            // Map suit and rank to filename, e.g. 'A-S.png', '10-H.png', etc.
-            let suitLetter = '';
-            switch (card.suit) {
-                case '♠': suitLetter = 'S'; break;
-                case '♥': suitLetter = 'H'; break;
-                case '♦': suitLetter = 'D'; break;
-                case '♣': suitLetter = 'C'; break;
-            }
-            cardImg = `${card.rank}-${suitLetter}.png`;
+            // Map suit and rank to filename
+            cardImg = this.getBlackjackCardImage(card);
+            cardDiv.style.background = `#222 url('../../assets/cards/images/${cardImg}') center/contain no-repeat`;
+            cardDiv.style.backgroundSize = '80px 112px';
         }
-        cardDiv.style.background = `#222 url('../../assets/cards/${cardImg}') center/contain no-repeat`;
-        cardDiv.style.backgroundSize = '80px 112px';
 
         // Add pixel grid overlay
         const grid = document.createElement('div');
@@ -329,6 +324,29 @@ class PokerGame {
                 messageElement.textContent = 'Round complete! Click "Next Round" to continue.';
                 break;
         }
+    }
+    
+    // Add this mapping for card images using only existing files - exactly 52 cards mapped to 52 files
+    cardImageMap = {
+        // Map each card to a unique available file (52 total)
+        'A-S': 'black jack cards_01.png', '2-S': 'black jack cards_02.png', '3-S': 'black jack cards_03.png', '4-S': 'black jack cards_04.png', '5-S': 'black jack cards_05.png', '6-S': 'black jack cards_06.png', '7-S': 'black jack cards_07.png', '8-S': 'black jack cards_08.png', '9-S': 'black jack cards_09.png', '10-S': 'black jack cards_10.png', 'J-S': 'black jack cards_11.png', 'Q-S': 'black jack cards_13.png', 'K-S': 'black jack cards_14.png',
+        'A-D': 'black jack cards_16.png', '2-D': 'black jack cards_17.png', '3-D': 'black jack cards_18.png', '4-D': 'black jack cards_20.png', '5-D': 'black jack cards_21.png', '6-D': 'black jack cards_23.png', '7-D': 'black jack cards_24.png', '8-D': 'black jack cards_27.png', '9-D': 'black jack cards_28.png', '10-D': 'black jack cards_29.png', 'J-D': 'black jack cards_30.png', 'Q-D': 'black jack cards_32.png', 'K-D': 'black jack cards_33.png',
+        'A-C': 'black jack cards_35.png', '2-C': 'black jack cards_36.png', '3-C': 'black jack cards_39.png', '4-C': 'black jack cards_40.png', '5-C': 'black jack cards_41.png', '6-C': 'black jack cards_42.png', '7-C': 'black jack cards_43.png', '8-C': 'black jack cards_44.png', '9-C': 'black jack cards_47.png', '10-C': 'black jack cards_48.png', 'J-C': 'black jack cards_49.png', 'Q-C': 'black jack cards_50.png', 'K-C': 'black jack cards_51.png',
+        'A-H': 'black jack cards_52.png', '2-H': 'black jack cards_53.png', '3-H': 'black jack cards_54.png', '4-H': 'black jack cards_55.png', '5-H': 'black jack cards_56.png', '6-H': 'black jack cards_58.png', '7-H': 'black jack cards_59.png', '8-H': 'black jack cards_60.png', '9-H': 'black jack cards_61.png', '10-H': 'black jack cards_62.png', 'J-H': 'black jack cards_63.png', 'Q-H': 'black jack cards_64.png', 'K-H': 'black jack cards_65.png'
+    };
+
+    getBlackjackCardImage(card) {
+        // Map rank and suit to the correct image file name
+        if (!card || !card.rank || !card.suit) return this.cardImageMap['BACK'];
+        let suitLetter = '';
+        switch (card.suit) {
+            case '♠': suitLetter = 'S'; break;
+            case '♥': suitLetter = 'H'; break;
+            case '♦': suitLetter = 'D'; break;
+            case '♣': suitLetter = 'C'; break;
+        }
+        const key = `${card.rank}-${suitLetter}`;
+        return this.cardImageMap[key] || this.cardImageMap['BACK'];
     }
 }
 
