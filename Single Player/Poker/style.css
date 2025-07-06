@@ -7,18 +7,44 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(45deg, #1e3c72, #2a5298, #ff6b6b, #ffffff);
-    background-size: 400% 400%;
-    animation: gradientShift 8s ease infinite;
+    background: 
+        radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(45deg, #dc143c 0%, #ffffff 25%, #002868 50%, #dc143c 75%, #ffffff 100%);
+    background-size: 50px 50px, 50px 50px, 300% 300%;
+    animation: gradientShift 15s ease-in-out infinite, starTwinkle 3s ease-in-out infinite;
     min-height: 100vh;
     color: #fff;
     overflow-x: hidden;
+    position: relative;
 }
 
+
+
 @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% { 
+        background-position: 0% 0%; 
+    }
+    20% { 
+        background-position: 100% 25%; 
+    }
+    40% { 
+        background-position: 50% 100%; 
+    }
+    60% { 
+        background-position: 0% 75%; 
+    }
+    80% { 
+        background-position: 75% 0%; 
+    }
+    100% { 
+        background-position: 0% 0%; 
+    }
+}
+
+@keyframes starTwinkle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
 }
 
 .container {
@@ -34,11 +60,66 @@ h1 {
     text-align: center;
     font-size: 3em;
     margin-bottom: 30px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    text-shadow: 
+        2px 2px 0px rgba(0, 0, 0, 0.7),
+        4px 4px 8px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+    letter-spacing: 2px;
+    position: relative;
+    animation: textColorShift 15s ease-in-out infinite reverse;
+}
+
+@keyframes textColorShift {
+    0% { 
+        color: #dc143c;
+        text-shadow: 
+            2px 2px 0px #ffffff,
+            4px 4px 0px #002868,
+            6px 6px 8px rgba(0, 0, 0, 0.5);
+    }
+    33% { 
+        color: #ffffff;
+        text-shadow: 
+            2px 2px 0px #002868,
+            4px 4px 0px #dc143c,
+            6px 6px 8px rgba(0, 0, 0, 0.5);
+    }
+    66% { 
+        color: #002868;
+        text-shadow: 
+            2px 2px 0px #dc143c,
+            4px 4px 0px #ffffff,
+            6px 6px 8px rgba(0, 0, 0, 0.5);
+    }
+    100% { 
+        color: #dc143c;
+        text-shadow: 
+            2px 2px 0px #ffffff,
+            4px 4px 0px #002868,
+            6px 6px 8px rgba(0, 0, 0, 0.5);
+    }
+}
+
+h1::before {
+    content: '⭐';
+    position: absolute;
+    left: -50px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.5em;
+    color: #ffffff;
+    animation: starTwinkle 2s ease-in-out infinite;
+}
+
+h1::after {
+    content: '⭐';
+    position: absolute;
+    right: -50px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.5em;
+    color: #ffffff;
+    animation: starTwinkle 2s ease-in-out infinite 1s;
 }
 
 /* Screen Management */
@@ -56,24 +137,31 @@ h1 {
 
 /* Start Screen */
 .instructions {
-    background: rgba(0,0,0,0.3);
+    background: 
+        linear-gradient(45deg, rgba(220, 20, 60, 0.2), rgba(0, 40, 104, 0.2)),
+        rgba(255, 255, 255, 0.1);
     padding: 40px;
     border-radius: 20px;
     margin-bottom: 30px;
     backdrop-filter: blur(10px);
     max-width: 800px;
     text-align: left;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
 .instructions h2 {
-    color: #4ecdc4;
+    color: #ffffff;
     margin-bottom: 20px;
     text-align: center;
+    text-shadow: 2px 2px 4px rgba(220, 20, 60, 0.7);
+    font-weight: bold;
 }
 
 .instructions h3 {
-    color: #4ecdc4;
+    color: #ffffff;
     margin: 20px 0 15px 0;
+    text-shadow: 1px 1px 2px rgba(0, 40, 104, 0.7);
 }
 
 .instructions ul {
@@ -86,9 +174,12 @@ h1 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 10px;
-    background: rgba(255,255,255,0.1);
+    background: 
+        linear-gradient(45deg, rgba(220, 20, 60, 0.1), rgba(0, 40, 104, 0.1)),
+        rgba(255,255,255,0.1);
     padding: 20px;
     border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* Buttons */
@@ -106,47 +197,56 @@ h1 {
 }
 
 .btn-primary {
-    background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+    background: linear-gradient(45deg, #dc143c, #b91c3c);
     color: white;
-    box-shadow: 0 4px 15px rgba(238, 90, 82, 0.4);
+    box-shadow: 0 4px 15px rgba(220, 20, 60, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(238, 90, 82, 0.6);
+    box-shadow: 0 6px 20px rgba(220, 20, 60, 0.6);
+    background: linear-gradient(45deg, #ff1744, #dc143c);
 }
 
 .btn-secondary {
-    background: linear-gradient(45deg, #4ecdc4, #44a08d);
+    background: linear-gradient(45deg, #002868, #1a4480);
     color: white;
-    box-shadow: 0 4px 15px rgba(78, 205, 196, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 40, 104, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .btn-secondary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(78, 205, 196, 0.6);
+    box-shadow: 0 6px 20px rgba(0, 40, 104, 0.6);
+    background: linear-gradient(45deg, #1565c0, #002868);
 }
 
 .btn-warning {
-    background: linear-gradient(45deg, #ffa726, #ff9800);
-    color: white;
-    box-shadow: 0 4px 15px rgba(255, 167, 38, 0.4);
+    background: linear-gradient(45deg, #ffffff, #f5f5f5);
+    color: #002868;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.4);
+    border: 2px solid rgba(220, 20, 60, 0.3);
+    text-shadow: none;
 }
 
 .btn-warning:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 167, 38, 0.6);
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.6);
+    background: linear-gradient(45deg, #f5f5f5, #e0e0e0);
 }
 
 .btn-accent {
-    background: linear-gradient(45deg, #9c88ff, #8c7ae6);
+    background: linear-gradient(45deg, #dc143c, #002868);
     color: white;
     box-shadow: 0 4px 15px rgba(156, 136, 255, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .btn-accent:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(156, 136, 255, 0.6);
+    background: linear-gradient(45deg, #002868, #dc143c);
 }
 
 /* Game Screen */
@@ -156,29 +256,50 @@ h1 {
     gap: 40px;
     margin-bottom: 30px;
     padding: 20px;
-    background: rgba(0,0,0,0.3);
+    background: 
+        linear-gradient(45deg, rgba(220, 20, 60, 0.2), rgba(0, 40, 104, 0.2)),
+        rgba(0,0,0,0.3);
     border-radius: 15px;
     backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
 .score-item {
     text-align: center;
     padding: 15px 25px;
-    background: rgba(255,255,255,0.1);
+    background: 
+        linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(220, 20, 60, 0.1)),
+        rgba(255,255,255,0.1);
     border-radius: 10px;
     border: 2px solid rgba(255,255,255,0.3);
+    position: relative;
+}
+
+.score-item::before {
+    content: '★';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #ffffff;
+    font-size: 0.8em;
+    opacity: 0.7;
 }
 
 .score-item .label {
     font-size: 0.9em;
-    opacity: 0.8;
+    opacity: 0.9;
     margin-bottom: 5px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .score-item .value {
     font-size: 1.5em;
     font-weight: bold;
-    color: #4ecdc4;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(220, 20, 60, 0.7);
 }
 
 /* Hand Sections */
@@ -205,17 +326,32 @@ h1 {
     text-align: center;
     font-size: 1.3em;
     font-style: italic;
-    color: #4ecdc4;
+    color: #ffffff;
     font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    text-shadow: 
+        2px 2px 0px rgba(220, 20, 60, 0.7),
+        4px 4px 8px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.hand-name::before {
+    content: '⭐ ';
+    color: #ffffff;
+    opacity: 0.8;
+}
+
+.hand-name::after {
+    content: ' ⭐';
+    color: #ffffff;
+    opacity: 0.8;
 }
 
 /* Cards */
 .card {
     width: 90px;
     height: 130px;
-    background: linear-gradient(145deg, #ffffff, #f0f0f0);
-    border: 2px solid #333;
+    background: linear-gradient(145deg, #ffffff, #f8f8f8);
+    border: 3px solid #002868;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
@@ -226,26 +362,60 @@ h1 {
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    box-shadow: 
+        0 4px 12px rgba(0,0,0,0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
     user-select: none;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    height: 3px;
+    background: linear-gradient(90deg, #dc143c, #ffffff, #002868);
+    border-radius: 8px 8px 0 0;
+    opacity: 0.6;
 }
 
 .card:hover {
     transform: translateY(-8px) scale(1.05);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    box-shadow: 
+        0 8px 20px rgba(0,0,0,0.3),
+        0 0 15px rgba(255, 255, 255, 0.3);
 }
 
 .card.selected {
     transform: translateY(-15px);
-    border-color: #ff6b6b;
-    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5);
-    background: linear-gradient(145deg, #ffe6e6, #ffcccc);
+    border-color: #dc143c;
+    box-shadow: 
+        0 8px 25px rgba(220, 20, 60, 0.5),
+        0 0 20px rgba(255, 255, 255, 0.4);
+    background: linear-gradient(145deg, #fff5f5, #ffe6e6);
 }
 
 .card.computer-card {
-    background: linear-gradient(145deg, #1e3c72, #2a5298);
+    background: linear-gradient(145deg, #002868, #1a4480);
+    border-color: #dc143c;
     color: white;
     cursor: default;
+}
+
+.card.computer-card::before {
+    background: linear-gradient(90deg, #ffffff, #dc143c, #ffffff);
+}
+
+.card.computer-card::after {
+    content: '★';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2em;
+    color: rgba(255, 255, 255, 0.3);
+    z-index: 1;
 }
 
 .card.computer-card:hover {
@@ -272,11 +442,11 @@ h1 {
 }
 
 .card.red .card-suit {
-    color: #ff4757;
+    color: #dc143c;
 }
 
 .card.black .card-suit {
-    color: #2f3542;
+    color: #002868;
 }
 
 .card-rank-bottom {
@@ -289,19 +459,27 @@ h1 {
 .game-controls {
     text-align: center;
     padding: 30px;
-    background: rgba(0,0,0,0.2);
+    background: 
+        linear-gradient(45deg, rgba(220, 20, 60, 0.1), rgba(0, 40, 104, 0.1)),
+        rgba(0,0,0,0.2);
     border-radius: 20px;
     backdrop-filter: blur(10px);
     margin: 20px 0;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
 .message {
     font-size: 1.4em;
     margin-bottom: 25px;
     padding: 20px;
-    background: rgba(255,255,255,0.1);
+    background: 
+        linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(220, 20, 60, 0.1)),
+        rgba(255,255,255,0.1);
     border-radius: 15px;
-    border-left: 4px solid #4ecdc4;
+    border-left: 4px solid #dc143c;
+    border-right: 4px solid #002868;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .controls {
@@ -315,27 +493,40 @@ h1 {
 .result {
     margin-top: 25px;
     padding: 25px;
-    background: rgba(0,0,0,0.3);
+    background: 
+        linear-gradient(45deg, rgba(220, 20, 60, 0.2), rgba(0, 40, 104, 0.2)),
+        rgba(0,0,0,0.3);
     border-radius: 15px;
     backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .winner {
     font-size: 1.8em;
     font-weight: bold;
     margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 .winner.player-win {
-    color: #2ecc71;
+    color: #ffffff;
+    text-shadow: 
+        2px 2px 0px #dc143c,
+        4px 4px 8px rgba(0, 0, 0, 0.7);
 }
 
 .winner.computer-win {
-    color: #e74c3c;
+    color: #ffffff;
+    text-shadow: 
+        2px 2px 0px #002868,
+        4px 4px 8px rgba(0, 0, 0, 0.7);
 }
 
 .winner.tie {
-    color: #f39c12;
+    color: #ffffff;
+    text-shadow: 
+        2px 2px 0px #888,
+        4px 4px 8px rgba(0, 0, 0, 0.7);
 }
 
 /* Fireworks */
@@ -354,6 +545,10 @@ h1 {
         transform: scale(0);
         opacity: 1;
     }
+    50% {
+        transform: scale(0.8);
+        opacity: 0.8;
+    }
     100% {
         transform: scale(1);
         opacity: 0;
@@ -365,7 +560,61 @@ h1 {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    animation: firework 1s ease-out forwards;
+    animation: firework 1.5s ease-out forwards;
+    box-shadow: 
+        0 0 10px currentColor,
+        0 0 20px currentColor,
+        0 0 30px currentColor;
+}
+
+.firework:nth-child(odd) {
+    background: radial-gradient(circle, #dc143c, #ff6b9d);
+}
+
+.firework:nth-child(even) {
+    background: radial-gradient(circle, #002868, #4dabf7);
+}
+
+.firework:nth-child(3n) {
+    background: radial-gradient(circle, #ffffff, #f8f9fa);
+}
+
+/* Additional 4th of July Decorations */
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, white, transparent),
+        radial-gradient(2px 2px at 40px 70px, white, transparent),
+        radial-gradient(1px 1px at 90px 40px, white, transparent),
+        radial-gradient(1px 1px at 130px 80px, white, transparent),
+        radial-gradient(2px 2px at 160px 30px, white, transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    opacity: 0.1;
+    animation: starMove 20s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes starMove {
+    from { transform: translateX(0px); }
+    to { transform: translateX(200px); }
+}
+
+/* Red, white, and blue themed hover effects */
+.btn:hover {
+    animation: patrioticGlow 0.3s ease;
+}
+
+@keyframes patrioticGlow {
+    0% { box-shadow: 0 0 5px rgba(220, 20, 60, 0.3); }
+    50% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.6), 0 0 25px rgba(0, 40, 104, 0.3); }
+    100% { box-shadow: 0 0 5px rgba(220, 20, 60, 0.3); }
 }
 
 /* Responsive Design */
@@ -378,9 +627,17 @@ h1 {
         font-size: 2.2em;
     }
 
+    h1::before,
+    h1::after {
+        font-size: 0.4em;
+        left: -30px;
+        right: -30px;
+    }
+
     .score-board {
         flex-direction: column;
         gap: 15px;
+        padding: 15px;
     }
 
     .hand {
@@ -391,6 +648,11 @@ h1 {
         width: 70px;
         height: 100px;
         font-size: 1em;
+        border-width: 2px;
+    }
+
+    .card::before {
+        height: 2px;
     }
 
     .card-suit {
@@ -405,15 +667,29 @@ h1 {
     .btn {
         width: 250px;
         margin: 5px 0;
+        font-size: 1em;
+        padding: 12px 25px;
     }
 
     .instructions {
         padding: 20px;
         margin: 10px;
+        border-width: 1px;
     }
 
     .rankings-grid {
         grid-template-columns: 1fr;
+        padding: 15px;
+    }
+
+    .game-controls {
+        padding: 20px;
+        margin: 15px 0;
+    }
+
+    .message {
+        font-size: 1.2em;
+        padding: 15px;
     }
 }
 
@@ -422,6 +698,14 @@ h1 {
         width: 60px;
         height: 85px;
         font-size: 0.9em;
+        border-width: 2px;
+    }
+
+    .card::before {
+        height: 2px;
+        top: 1px;
+        left: 1px;
+        right: 1px;
     }
 
     .card-rank {
@@ -436,15 +720,81 @@ h1 {
     .card-rank-bottom {
         font-size: 1em;
     }
+
+    h1 {
+        font-size: 1.8em;
+        letter-spacing: 1px;
+    }
+
+    h1::before,
+    h1::after {
+        font-size: 0.3em;
+        left: -20px;
+        right: -20px;
+    }
+
+    .btn {
+        font-size: 0.9em;
+        padding: 10px 20px;
+        width: 220px;
+    }
+
+    .score-item {
+        padding: 10px 15px;
+    }
+
+    .message {
+        font-size: 1.1em;
+        padding: 12px;
+    }
+
+    .instructions {
+        padding: 15px;
+        margin: 5px;
+    }
 }
 
 /* Loading Animation */
 @keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.5; }
-    100% { opacity: 1; }
+    0% { 
+        opacity: 1; 
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 0.7; 
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(220, 20, 60, 0.5);
+    }
+    100% { 
+        opacity: 1; 
+        transform: scale(1);
+    }
 }
 
 .loading {
-    animation: pulse 1s infinite;
+    animation: pulse 1.5s infinite;
+    border: 2px solid rgba(220, 20, 60, 0.3);
+    background: linear-gradient(45deg, 
+        rgba(220, 20, 60, 0.1), 
+        rgba(255, 255, 255, 0.1), 
+        rgba(0, 40, 104, 0.1));
+}
+
+/* Patriotic focus states */
+.btn:focus,
+.card:focus {
+    outline: 3px solid rgba(220, 20, 60, 0.6);
+    outline-offset: 2px;
+}
+
+/* Victory celebration styles */
+.celebration {
+    animation: celebrate 2s ease-in-out;
+}
+
+@keyframes celebrate {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.1) rotate(2deg); }
+    50% { transform: scale(1.05) rotate(-1deg); }
+    75% { transform: scale(1.08) rotate(1deg); }
 }
