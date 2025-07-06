@@ -240,45 +240,62 @@ class PokerGame {
     createCardElement(card, isPlayerHand, index) {
         const cardDiv = document.createElement('div');
         cardDiv.className = 'card';
-        
-        if (!isPlayerHand || this.gameState === 'revealed') {
-            // Show actual card
-            const suitColor = (card.suit === '♥' || card.suit === '♦') ? 'red' : 'black';
-            cardDiv.classList.add(suitColor);
-            cardDiv.innerHTML = `
-                <div class="card-content">
-                    <div class="card-rank">${card.rank}</div>
-                    <div class="card-suit">${card.suit}</div>
-                    <div class="card-rank-bottom">${card.rank}</div>
-                </div>
-            `;
-        } else if (!isPlayerHand) {
-            // Show card back for computer
-            cardDiv.classList.add('computer-card');
-            cardDiv.innerHTML = `
-                <div class="card-content">
-                    <div class="card-rank">?</div>
-                    <div class="card-suit">🎴</div>
-                    <div class="card-rank-bottom">?</div>
-                </div>
-            `;
+        cardDiv.style.width = '80px';
+        cardDiv.style.height = '112px';
+        cardDiv.style.display = 'inline-block';
+        cardDiv.style.margin = '4px';
+        cardDiv.style.border = '6px solid #fff';
+        cardDiv.style.outline = '3px solid #000';
+        cardDiv.style.borderRadius = '0';
+        cardDiv.style.boxShadow = 'none';
+        cardDiv.style.fontFamily = '"Press Start 2P", monospace, Arial, sans-serif';
+        cardDiv.style.fontSize = '18px';
+        cardDiv.style.letterSpacing = '0px';
+        cardDiv.style.color = (card.suit === '♥' || card.suit === '♦') ? '#ff3c3c' : '#fff';
+        cardDiv.style.textShadow = 'none';
+        cardDiv.style.imageRendering = 'pixelated';
+        cardDiv.style.position = 'relative';
+        cardDiv.style.overflow = 'hidden';
+        cardDiv.style.boxSizing = 'border-box';
+        cardDiv.style.filter = 'contrast(2)';
+        cardDiv.style.zIndex = '1';
+
+        // Determine card image filename
+        let cardImg = '';
+        if (!isPlayerHand && this.gameState !== 'revealed') {
+            cardImg = 'BACK.png';
         } else {
-            // Player card - show actual card and make selectable
-            const suitColor = (card.suit === '♥' || card.suit === '♦') ? 'red' : 'black';
-            cardDiv.classList.add(suitColor);
-            cardDiv.innerHTML = `
-                <div class="card-content">
-                    <div class="card-rank">${card.rank}</div>
-                    <div class="card-suit">${card.suit}</div>
-                    <div class="card-rank-bottom">${card.rank}</div>
-                </div>
-            `;
-            
-            if (this.gameState === 'selecting') {
-                cardDiv.addEventListener('click', () => this.toggleCardSelection(index, cardDiv));
+            // Map suit and rank to filename, e.g. 'A-S.png', '10-H.png', etc.
+            let suitLetter = '';
+            switch (card.suit) {
+                case '♠': suitLetter = 'S'; break;
+                case '♥': suitLetter = 'H'; break;
+                case '♦': suitLetter = 'D'; break;
+                case '♣': suitLetter = 'C'; break;
             }
+            cardImg = `${card.rank}-${suitLetter}.png`;
         }
-        
+        cardDiv.style.background = `#222 url('../../assets/cards/${cardImg}') center/contain no-repeat`;
+        cardDiv.style.backgroundSize = '80px 112px';
+
+        // Add pixel grid overlay
+        const grid = document.createElement('div');
+        grid.style.position = 'absolute';
+        grid.style.top = '0';
+        grid.style.left = '0';
+        grid.style.width = '100%';
+        grid.style.height = '100%';
+        grid.style.pointerEvents = 'none';
+        grid.style.backgroundImage =
+            'linear-gradient(to right, rgba(0,0,0,0.15) 1px, transparent 1px),'+
+            'linear-gradient(to bottom, rgba(0,0,0,0.15) 1px, transparent 1px)';
+        grid.style.backgroundSize = '8px 8px';
+        cardDiv.appendChild(grid);
+
+        // Add click for selection (player hand, selecting phase)
+        if (isPlayerHand && this.gameState === 'selecting') {
+            cardDiv.addEventListener('click', () => this.toggleCardSelection(index, cardDiv));
+        }
         return cardDiv;
     }
     
